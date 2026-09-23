@@ -1,26 +1,105 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Fancy Form</title>
-
-  <!-- You may add more stuff here -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Currency Swap Form</title>
   <link href="style.css" rel="stylesheet" />
 </head>
 
 <body>
+  <div class="container">
+    <div class="swap-card">
+      <div class="header">
+        <h1>Swap Assets</h1>
+        <p class="subtitle">Exchange currencies instantly</p>
+      </div>
 
-  <!-- You may reorganise the whole HTML, as long as your form achieves the same effect. -->
-  <form onsubmit="return !1">
-    <h5>Swap</h5>
-    <label for="input-amount">Amount to send</label>
-    <input id="input-amount" />
+      <form id="swap-form" onsubmit="handleSwap(event)">
+        <!-- From Section -->
+        <div class="swap-section">
+          <div class="section-header">
+            <label for="from-amount">Amount to send</label>
+            <span class="balance">Balance: <span id="from-balance">-</span></span>
+          </div>
 
-    <label for="output-amount">Amount to receive</label>
-    <input id="output-amount" />
+          <div class="input-group">
+            <input 
+              id="from-amount" 
+              type="number" 
+              placeholder="0.00" 
+              min="0" 
+              step="0.01"
+              value="1"
+              class="amount-input"
+            />
+            <button type="button" id="from-token-btn" class="token-btn">
+              <img id="from-token-icon" src="" alt="token" class="token-icon" />
+              <span id="from-token-name" class="token-name">USDC</span>
+              <span class="dropdown-arrow">▼</span>
+            </button>
+          </div>
+          <div id="from-error" class="error-message"></div>
+        </div>
 
-    <button>CONFIRM SWAP</button>
-  </form>
+        <!-- Swap Button -->
+        <button type="button" id="swap-btn" class="swap-button" title="Swap currencies">
+          ⇅
+        </button>
+
+        <!-- To Section -->
+        <div class="swap-section">
+          <div class="section-header">
+            <label for="to-amount">Amount to receive</label>
+            <span class="exchange-rate" id="exchange-rate">-</span>
+          </div>
+
+          <div class="input-group">
+            <input 
+              id="to-amount" 
+              type="number" 
+              placeholder="0.00" 
+              min="0" 
+              step="0.01"
+              readonly
+              class="amount-input"
+            />
+            <button type="button" id="to-token-btn" class="token-btn">
+              <img id="to-token-icon" src="" alt="token" class="token-icon" />
+              <span id="to-token-name" class="token-name">USDT</span>
+              <span class="dropdown-arrow">▼</span>
+            </button>
+          </div>
+          <div id="to-error" class="error-message"></div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" id="submit-btn" class="submit-btn">
+          <span class="btn-text">CONFIRM SWAP</span>
+          <span class="loader" id="loader"></span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Token Selector Modal -->
+  <div id="token-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Select Token</h2>
+        <button type="button" class="close-btn" onclick="closeTokenModal()">✕</button>
+      </div>
+      <input 
+        type="text" 
+        id="token-search" 
+        class="token-search" 
+        placeholder="Search token (name or symbol)..."
+      />
+      <div id="token-list" class="token-list"></div>
+    </div>
+  </div>
+
   <script src="script.js"></script>
 </body>
 
